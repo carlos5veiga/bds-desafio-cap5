@@ -1,15 +1,10 @@
 package com.devsuperior.movieflix.dto;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.Column;
 
 import com.devsuperior.movieflix.entities.Movie;
-import com.devsuperior.movieflix.entities.Review;
 
-public class MovieDTO implements Serializable {
+public class MovieBasicDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
@@ -18,40 +13,24 @@ public class MovieDTO implements Serializable {
 	private Integer year;
 	private String imgUrl;
 	
-	@Column(columnDefinition = "TEXT")
-	private String synopsis;
-	
-	private Long genreId;
-	
-	private List<Review> reviews = new ArrayList<>();
-	
-	public MovieDTO() {
+	public MovieBasicDTO() {
 	}
 
-	public MovieDTO(Long id, String title, String subTitle, Integer year, String imgUrl, String synopsis, Long genreId) {
+	public MovieBasicDTO(Long id, String title, String subTitle, Integer year, String imgUrl) {
 		this.id = id;
 		this.title = title;
 		this.subTitle = subTitle;
 		this.year = year;
 		this.imgUrl = imgUrl;
-		this.synopsis = synopsis;
-		this.genreId = genreId;
 	}
 	
-	public MovieDTO(Movie entity) {
+	public MovieBasicDTO(Movie entity) {
 		id = entity.getId();
 		title = entity.getTitle();
 		subTitle = entity.getSubTitle();
 		year = entity.getYear();
 		imgUrl = entity.getImgUrl();
-		synopsis = entity.getSynopsis();
-		genreId = entity.getGenre().getId();
 	}
-	
-	/*public MovieDTO(Movie entity, Set<Review> reviews) {
-		this(entity);
-		reviews.forEach(rev -> this.reviews.add(new ReviewDTO(rev)));
-	}*/
 
 	public Long getId() {
 		return id;
@@ -91,25 +70,5 @@ public class MovieDTO implements Serializable {
 
 	public void setImgUrl(String imgUrl) {
 		this.imgUrl = imgUrl;
-	}
-
-	public String getSynopsis() {
-		return synopsis;
-	}
-
-	public void setSynopsis(String synopsis) {
-		this.synopsis = synopsis;
-	}
-
-	public Long getGenreId() {
-		return genreId;
-	}
-
-	public void setGenreId(Long genreId) {
-		this.genreId = genreId;
-	}
-
-	public List<Review> getReviews() {
-		return reviews;
 	}
 }

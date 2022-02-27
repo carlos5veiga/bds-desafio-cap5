@@ -34,7 +34,6 @@ public class Review {
 	}
 
 	public Review(Long id, String text, User user, Movie movie) {
-		super();
 		this.id = id;
 		this.text = text;
 		this.user = user;
