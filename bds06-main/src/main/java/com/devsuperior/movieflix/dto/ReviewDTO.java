@@ -3,6 +3,7 @@ package com.devsuperior.movieflix.dto;
 import java.io.Serializable;
 
 import javax.persistence.Column;
+import javax.validation.constraints.NotBlank;
 
 import com.devsuperior.movieflix.entities.Review;
 
@@ -11,27 +12,23 @@ public class ReviewDTO implements Serializable {
 
 	private Long id;
 	
+	@NotBlank(message = "O texto não pode ser vazio")
 	@Column(columnDefinition = "TEXT")
 	private String text;
-	
-	private Long userId;
-	private Long movieId;
-	
+
+	private Long movieId;	
+	private UserDTO user;
+
 	public ReviewDTO() {
 	}
 
-	public ReviewDTO(Long id, String text, Long userId, Long movieId) {
-		this.id = id;
-		this.text = text;
-		this.userId = userId;
-		this.movieId = movieId;
-	}
+
 	
 	public ReviewDTO(Review entity) {
 		id = entity.getId();
 		text = entity.getText();
-		userId = entity.getUser().getId();
 		movieId = entity.getMovie().getId();
+		user = new UserDTO(entity.getUser());
 	}
 
 	public Long getId() {
@@ -50,12 +47,12 @@ public class ReviewDTO implements Serializable {
 		this.text = text;
 	}
 
-	public Long getUserId() {
-		return userId;
+	public UserDTO getUser() {
+		return user;
 	}
 
-	public void setUserId(Long userId) {
-		this.userId = userId;
+	public void setUser(UserDTO user) {
+		this.user = user;
 	}
 
 	public Long getMovieId() {

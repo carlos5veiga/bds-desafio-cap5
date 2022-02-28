@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.devsuperior.movieflix.dto.ReviewDTO;
+import com.devsuperior.movieflix.dto.UserDTO;
 import com.devsuperior.movieflix.services.ReviewService;
+import com.devsuperior.movieflix.services.UserService;
 
 @RestController
 @RequestMapping(value="/reviews")
@@ -22,9 +24,13 @@ public class ReviewController {
 	@Autowired
 	private ReviewService service;
 	
+	@Autowired
+	private UserService userService;
+	
 	@PostMapping
 	public ResponseEntity<ReviewDTO> insert(@Valid @RequestBody ReviewDTO dto){
-		dto = service.insert(dto);
+		UserDTO userDto = userService.findCurrentUser();
+		dto = service.insert(dto, userDto);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
 		return ResponseEntity.created(uri).body(dto);
 	}
